@@ -1,13 +1,17 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const miniPayNFT = await ethers.deployContract("MiniPay", [
-    "0x0D6Dc2f182Eafa687090F95466d5368726C1ca45",
-  ]);
+  // Get the contract factory
+  const DecentralizedSavings = await ethers.getContractFactory("DecentralizedSavings");
+  
+  // Deploy the contract
+  const decentralizedSavings = await DecentralizedSavings.deploy();
+  
+  // Wait for the contract to be deployed
+  await decentralizedSavings.waitForDeployment();
 
-  await miniPayNFT.waitForDeployment();
-
-  console.log("Minipay NFT address - " + (await miniPayNFT.getAddress()));
+  // Log the address of the deployed contract
+  console.log("DecentralizedSavings contract deployed to address:", await decentralizedSavings.getAddress());
 }
 
 // We recommend this pattern to be able to use async/await everywhere
